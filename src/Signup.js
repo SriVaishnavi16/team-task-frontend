@@ -7,13 +7,17 @@ function Signup() {
   const [password, setPassword] = useState("");
 
   const handleSignup = async () => {
-    await axios.post("http://localhost:5000/api/auth/signup", {
-      name,
-      email,
-      password
-    });
+    try {
+      await axios.post("https://team-task-backend-28oz.onrender.com/api/auth/signup", {
+        name,
+        email,
+        password
+      });
 
-    alert("User created");
+      alert("User created");
+    } catch (err) {
+      alert("Signup failed");
+    }
   };
 
   return (
