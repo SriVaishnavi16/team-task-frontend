@@ -6,13 +6,17 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    const res = await axios.post("http://localhost:5000/api/auth/login", {
-      email,
-      password
-    });
+    try {
+      const res = await axios.post("https://team-task-backend-28oz.onrender.com/api/auth/login", {
+        email,
+        password
+      });
 
-    localStorage.setItem("token", res.data.token);
-    alert("Login successful");
+      localStorage.setItem("token", res.data.token);
+      alert("Login successful");
+    } catch (err) {
+      alert("Login failed");
+    }
   };
 
   return (
