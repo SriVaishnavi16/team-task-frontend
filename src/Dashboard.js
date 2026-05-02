@@ -6,20 +6,33 @@ function Dashboard() {
   const [title, setTitle] = useState("");
 
   const fetchTasks = async () => {
-    const res = await axios.get("http://localhost:5000/api/tasks");
-    setTasks(res.data);
+    try {
+      const res = await axios.get("https://team-task-backend-28oz.onrender.com/api/tasks");
+      setTasks(res.data);
+    } catch (err) {
+      console.error("Error fetching tasks");
+    }
   };
 
   const addTask = async () => {
-    await axios.post("http://localhost:5000/api/tasks", {
-      title
-    });
-    fetchTasks();
+    try {
+      await axios.post("https://team-task-backend-28oz.onrender.com/api/tasks", {
+        title
+      });
+      setTitle("");
+      fetchTasks();
+    } catch (err) {
+      console.error("Error adding task");
+    }
   };
 
   const updateTask = async (id, status) => {
-    await axios.put(`http://localhost:5000/api/tasks/${id}`, { status });
-    fetchTasks();
+    try {
+      await axios.put(`https://team-task-backend-28oz.onrender.com/api/tasks/${id}`, { status });
+      fetchTasks();
+    } catch (err) {
+      console.error("Error updating task");
+    }
   };
 
   useEffect(() => {
@@ -30,7 +43,11 @@ function Dashboard() {
     <div>
       <h2>Dashboard</h2>
 
-      <input placeholder="New Task" onChange={(e) => setTitle(e.target.value)} />
+      <input
+        placeholder="New Task"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
       <button onClick={addTask}>Add Task</button>
 
       <ul>
